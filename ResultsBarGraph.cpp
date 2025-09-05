@@ -37,8 +37,8 @@ int maxValue(const QMap<QDate, int>& habitData)
 
 void setTheme(JKQTPlotter& plot, Color color)
 {
-	QString	  configPath{color == Color::Pink ? "/ssd_home/assets/dark_pink.ini"
-											  : "/ssd_home/assets/dark_green.ini"};
+	QString	  configPath{color == Color::Pink ? ":/dark_pink.ini"
+											  : ":/dark_green.ini"};
 	QSettings settings{configPath, QSettings::IniFormat};
 	plot.loadCurrentPlotterStyle(settings);
 

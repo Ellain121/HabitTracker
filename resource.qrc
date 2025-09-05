@@ -4,5 +4,7 @@
         <file>x-mark.png</file>
         <file>success.wav</file>
         <file>minus.png</file>
+        <file>dark_pink.ini</file>
+        <file>dark_green.ini</file>
     </qresource>
 </RCC>

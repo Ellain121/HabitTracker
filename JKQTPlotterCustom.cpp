@@ -1,8 +1,9 @@
 #include "JKQTPlotterCustom.hpp"
 
 JKQTPlotterCustom::JKQTPlotterCustom(QWidget* parent)
-	: JKQTPlotter{parent}
+    : JKQTPlotter{parent}
 {
+    // resizeTimer.setInterval(std::chrono::milliseconds(200));
 }
 // temp
 #include <QDateTime>
@@ -10,8 +11,8 @@ void JKQTPlotterCustom::wheelEvent(QWheelEvent* event)
 {
 	double xMin = getXMin();
 	double xMax = getXMax();
-	double yMin = getYMin();
-	double yMax = getYMax();
+    mYMin = getYMin();
+    mYMax = getYMax();
 	double viewWidth = xMax - xMin;
 
 	//	double zoomStep = (xMax - xMin) / 10;
@@ -22,21 +23,29 @@ void JKQTPlotterCustom::wheelEvent(QWheelEvent* event)
 	double absMaxX = getXAxis()->getAbsoluteMax();
 	double absMinX = getXAxis()->getAbsoluteMin();
 
-	double zoomXMin = xMin + day * sign * mult;
-	double zoomXMax = xMax + day * sign * mult;
-	if (zoomXMin < absMinX)
+    mZoomXMin = xMin + day * sign * mult;
+    mZoomXMax = xMax + day * sign * mult;
+    if (mZoomXMin < absMinX)
 	{
-		zoomXMin = absMinX;
-		zoomXMax = absMinX + viewWidth;
+        mZoomXMin = absMinX;
+        mZoomXMax = absMinX + viewWidth;
 	}
-	if (zoomXMax > absMaxX)
+    if (mZoomXMax > absMaxX)
 	{
-		zoomXMin = absMaxX - viewWidth;
-		zoomXMax = absMaxX;
+        mZoomXMin = absMaxX - viewWidth;
+        mZoomXMax = absMaxX;
 	}
 
-	setXY(zoomXMin, zoomXMax, yMin, yMax);
-	qDebug() << "wheelEvent: " << event->angleDelta()
-			 << " absX: " << QDateTime::fromMSecsSinceEpoch(absMinX)
-			 << " zoomXMin: " << QDateTime::fromMSecsSinceEpoch(zoomXMin);
+    if (mTimer == nullptr)
+    {
+        // setXY(mZoomXMin, mZoomXMax, mYMin, mYMax);
+        mTimer = new QTimer(this);
+        connect(mTimer, &QTimer::timeout, this,
+            [this]() { setXY(mZoomXMin, mZoomXMax, mYMin, mYMax); });
+        mTimer->start(40);
+    }
+    // setX(z)
+    qDebug() << "wheelEvent: " << event->angleDelta()
+             << " absX: " << QDateTime::fromMSecsSinceEpoch(absMinX)
+             << " mZoomXMin: " << QDateTime::fromMSecsSinceEpoch(mZoomXMin);
 }
