@@ -4,7 +4,7 @@
 1) Конфигурация:<br>
 * У програмки есть зависимость от [JKQTPlotter](https://github.com/jkriege2/JKQtPlotter). Поэтому есть 2 варианта конфигурации:
 
-1. Вариант 1: Скачать JKQTPlotter в build директорию:<br>
+1. Вариант 1: Скачать JKQTPlotter в build директорию автоматически через cmake:<br>
 Через терминал:<br>
   ```cmake -B build -DDOWNLOAD_LOCAL_JKQTPlotter=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DJKQtPlotter_ENABLED_CXX20=ON "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources>"```<br><br>
 Или через qtcreator:<br>
