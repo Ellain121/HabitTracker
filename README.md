@@ -22,9 +22,9 @@
 2) Компиляция:
 ```cmake --build build # -jxx количество xx можно узнать nproc```
 
-<img width="809" height="635" alt="Screenshot from 2025-08-05 06-23-13" src="https://github.com/user-attachments/assets/a0bdf05f-8e3d-4e12-a72d-4e9c26106176" />
-<img width="809" height="635" alt="Screenshot from 2025-08-05 06-24-04" src="https://github.com/user-attachments/assets/2d01b489-46ee-448e-9f1c-980d262b1b72" />
-<img width="809" height="635" alt="Screenshot from 2025-08-05 06-24-29" src="https://github.com/user-attachments/assets/33f2f77c-aabd-4216-bdd5-5aeff960e7c1" />
-<img width="1043" height="624" alt="Screenshot from 2025-08-05 06-25-03" src="https://github.com/user-attachments/assets/d4ea07ae-834f-42f5-91f9-00373c92a407" />
-<img width="1043" height="624" alt="Screenshot from 2025-08-05 06-25-10" src="https://github.com/user-attachments/assets/a71e7591-65e4-4432-af5f-40f19b7bf58c" />
-<img width="1043" height="624" alt="Screenshot from 2025-08-05 06-25-14" src="https://github.com/user-attachments/assets/25a2f53c-7184-4130-b671-17f8b7f3d438" />
+<img width="1026" height="589" alt="Screenshot_20251124_142622" src="https://github.com/user-attachments/assets/d2e5a0a8-981e-492f-baac-decfb5ddc805" />
+<img width="1026" height="589" alt="Screenshot_20251124_142614" src="https://github.com/user-attachments/assets/f836386f-35a2-4df9-b985-8d6d528b67ff" />
+<img width="1026" height="589" alt="Screenshot_20251124_142602" src="https://github.com/user-attachments/assets/3e4fa2db-d894-441b-86bf-a0b12a6acf87" />
+<img width="797" height="623" alt="Screenshot_20251124_142521" src="https://github.com/user-attachments/assets/cd417ea4-5243-4aa0-821b-488d7eb89a5d" />
+<img width="797" height="622" alt="Screenshot_20251124_142423" src="https://github.com/user-attachments/assets/573e1e9f-809d-41db-a048-b4d40111382d" />
+<img width="797" height="622" alt="Screenshot_20251124_142349" src="https://github.com/user-attachments/assets/4303f546-20ec-4782-b7ae-bc585a1f6a8b" />
