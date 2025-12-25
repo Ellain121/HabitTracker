@@ -22,14 +22,14 @@ enum class Color
 struct Point
 {
     double x;
-    int	   y;
+    int    y;
 };
 
-}	 // namespace
+}    // namespace
 
 void setTheme(JKQTPlotter& plot, Color color)
 {
-    QString	  configPath{color == Color::Pink ? ":/dark_pink.ini" : ":/dark_green.ini"};
+    QString   configPath{color == Color::Pink ? ":/dark_pink.ini" : ":/dark_green.ini"};
     QSettings settings{configPath, QSettings::IniFormat};
     plot.loadCurrentPlotterStyle(settings);
 
@@ -83,7 +83,7 @@ void ScoreGraph::openSettings()
 void ScoreGraph::initGraphs()
 {
     const QMap<QDate, int>& habitData = mHabit->getDatesStatus();
-    int						habitDailyGoal = mHabit->getDailyGoal();
+    int                     habitDailyGoal = mHabit->getDailyGoal();
 
     bool isTheoGraphEnabled = toBool(
         Settings::instance().getSetting(mHabit->getName(), "enable_theo_graph_sg"));
@@ -129,8 +129,8 @@ void ScoreGraph::setPlotterSettings()
 void ScoreGraph::addTheoreticalGraph(const QMap<QDate, int>& origData, int dailyGoal)
 {
     QMap<QDate, int> theoreticalData;
-    int				 dailyResult = toInt(
-         Settings::instance().getSetting(mHabit->getName(), "theo_graph_daily_result_sg"));
+    int              dailyResult = toInt(
+        Settings::instance().getSetting(mHabit->getName(), "theo_graph_daily_result_sg"));
     for (auto it = origData.begin(); it != origData.end(); ++it)
     {
         theoreticalData.insert(it.key(), dailyResult);
@@ -142,20 +142,20 @@ void ScoreGraph::addGraph(const QMap<QDate, int>& data, int dailyGoal,
     const QString& xName, const QString& yName, bool setWidgetsStats)
 {
     JKQTPDatastore* ds = ui->scorePlot->getDatastore();
-    const int		columnXSize = data.size();
+    const int       columnXSize = data.size();
 
     size_t columnX = ds->addColumn(columnXSize, xName);
     size_t columnY = ds->addColumn(columnXSize, yName);
 
     double xFormula{}, yFormula{}, coef{7.0};
-    int	   bestStreak = 0;
-    int	   currentStreak = 0;
-    int	   i = 0;
+    int    bestStreak = 0;
+    int    currentStreak = 0;
+    int    i = 0;
     for (auto it = data.begin(); it != data.end(); ++it, ++i)
     {
         QDateTime date{it.key(), QTime{}};
-        double	  dayResult = static_cast<double>(it.value()) / dailyGoal;
-        double	  xDiff = 0.0;
+        double    dayResult = static_cast<double>(it.value()) / dailyGoal;
+        double    xDiff = 0.0;
         if (dayResult >= 1.0)
         {
             currentStreak++;
@@ -197,8 +197,8 @@ void ScoreGraph::setLastNDaysStats()
 {
     const QMap<QDate, int>& data = mHabit->getDatesStatus();
 
-    int	 hSize = static_cast<int>(data.size());
-    int	 last14DayResult = 0;
+    int  hSize = static_cast<int>(data.size());
+    int  last14DayResult = 0;
     auto it = data.end();
     for (int i = hSize - 1; i >= std::max(hSize - 14, 0); --i)
     {

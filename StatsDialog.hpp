@@ -12,20 +12,20 @@ class StatsDialog;
 
 class StatsDialog : public QDialog
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit StatsDialog(Habit&& habit, QWidget* parent = nullptr);
-	~StatsDialog();
+    explicit StatsDialog(Habit&& habit, QWidget* parent = nullptr);
+    ~StatsDialog();
 
 private:
-	void init();
-	void openStatsWidgetSettings(int indx);
+    void init();
+    void openStatsWidgetSettings(int indx);
 
 private:
-	Ui::StatsDialog* ui;
-	Habit			 mHabit;
+    Ui::StatsDialog* ui;
+    Habit            mHabit;
 
-	std::array<QWidget*, 3> mStatsWidgets;
-	int						mCurrentIndx;
+    std::array<QWidget*, 3> mStatsWidgets;
+    int                     mCurrentIndx;
 };

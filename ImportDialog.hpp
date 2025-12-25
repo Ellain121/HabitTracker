@@ -19,7 +19,7 @@ public:
     const std::vector<Habit>& getNewHabits() const;
 
 private:
-    QFormLayout*	   mFormLayout;
-    QListView*		   mHabitsListView;
+    QFormLayout*       mFormLayout;
+    QListView*         mHabitsListView;
     std::vector<Habit> mNewHabits;
 };

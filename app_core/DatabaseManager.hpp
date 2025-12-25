@@ -12,18 +12,18 @@ class QSqlQuery;
 class DatabaseManager
 {
 public:
-	static DatabaseManager& instance();
-	~DatabaseManager();
+    static DatabaseManager& instance();
+    ~DatabaseManager();
 
-	static void debugQuery(const QSqlQuery& query);
-
-private:
-	DatabaseManager(const QString& path = DATABASE_FILENAME);
-	DatabaseManager& operator=(const DatabaseManager& rhs) = delete;
+    static void debugQuery(const QSqlQuery& query);
 
 private:
-	std::unique_ptr<QSqlDatabase> mDatabase;
+    DatabaseManager(const QString& path = DATABASE_FILENAME);
+    DatabaseManager& operator=(const DatabaseManager& rhs) = delete;
+
+private:
+    std::unique_ptr<QSqlDatabase> mDatabase;
 
 public:
-	const HabitDao habitDao;
+    const HabitDao habitDao;
 };

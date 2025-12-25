@@ -18,5 +18,5 @@ public:
 
 private:
     static std::unique_ptr<QSoundEffect> mSoundPlayer;
-    static bool							 mPlayerActive;
+    static bool                          mPlayerActive;
 };

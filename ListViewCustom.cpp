@@ -12,8 +12,8 @@ QSize ListViewCustom::sizeHint() const
         return QSize(width(), 0);
 
     QSize itemSizeHint{sizeHintForColumn(0), sizeHintForRow(0)};
-    int	  columns = mWidth / itemSizeHint.width();
-    int	  rows = (model()->rowCount() + columns - 1) / columns;
+    int   columns = mWidth / itemSizeHint.width();
+    int   rows = (model()->rowCount() + columns - 1) / columns;
 
     return QSize(mWidth, rows * itemSizeHint.height() + itemSizeHint.height() / 2);
 }

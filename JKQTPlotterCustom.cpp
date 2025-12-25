@@ -9,32 +9,32 @@ JKQTPlotterCustom::JKQTPlotterCustom(QWidget* parent)
 #include <QDateTime>
 void JKQTPlotterCustom::wheelEvent(QWheelEvent* event)
 {
-	double xMin = getXMin();
-	double xMax = getXMax();
+    double xMin = getXMin();
+    double xMax = getXMax();
     mYMin = getYMin();
     mYMax = getYMax();
-	double viewWidth = xMax - xMin;
+    double viewWidth = xMax - xMin;
 
-	//	double zoomStep = (xMax - xMin) / 10;
-	double sign = (-1.0) * event->angleDelta().y() / 120;
-	double day = 86400000;
-	double mult = 2.0;
+    //	double zoomStep = (xMax - xMin) / 10;
+    double sign = (-1.0) * event->angleDelta().y() / 120;
+    double day = 86400000;
+    double mult = 2.0;
 
-	double absMaxX = getXAxis()->getAbsoluteMax();
-	double absMinX = getXAxis()->getAbsoluteMin();
+    double absMaxX = getXAxis()->getAbsoluteMax();
+    double absMinX = getXAxis()->getAbsoluteMin();
 
     mZoomXMin = xMin + day * sign * mult;
     mZoomXMax = xMax + day * sign * mult;
     if (mZoomXMin < absMinX)
-	{
+    {
         mZoomXMin = absMinX;
         mZoomXMax = absMinX + viewWidth;
-	}
+    }
     if (mZoomXMax > absMaxX)
-	{
+    {
         mZoomXMin = absMaxX - viewWidth;
         mZoomXMax = absMaxX;
-	}
+    }
 
     if (mTimer == nullptr)
     {

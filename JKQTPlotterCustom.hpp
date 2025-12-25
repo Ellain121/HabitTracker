@@ -7,15 +7,15 @@
 class JKQTPlotterCustom : public JKQTPlotter
 {
 public:
-	JKQTPlotterCustom(QWidget* parent = nullptr);
+    JKQTPlotterCustom(QWidget* parent = nullptr);
 
 protected:
-	void wheelEvent(QWheelEvent* event) override;
+    void wheelEvent(QWheelEvent* event) override;
 
 private:
     QTimer* mTimer = nullptr;
-    double	mZoomXMin;
-    double	mZoomXMax;
-    double	mYMin;
-    double	mYMax;
+    double  mZoomXMin;
+    double  mZoomXMax;
+    double  mYMin;
+    double  mYMax;
 };

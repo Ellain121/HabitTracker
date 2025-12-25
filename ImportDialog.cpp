@@ -46,20 +46,20 @@ ImportDialog::ImportDialog(const QString& importDBFilename, const QString& okBut
             Habit::Type habitType =
                 static_cast<Habit::Type>(toInt(index.data(HabitModel::TypeRole)));
             QString habitName = toQString(index.data(HabitModel::Roles::NameRole));
-            QDate	habitDate = toQDate(index.data(HabitModel::Roles::StartDateRole));
+            QDate   habitDate = toQDate(index.data(HabitModel::Roles::StartDateRole));
             QString habitUnits = toQString(index.data(HabitModel::Roles::UnitsRole));
-            int		habitDailyGoal = toInt(index.data(HabitModel::Roles::DailyGoalRole));
+            int     habitDailyGoal = toInt(index.data(HabitModel::Roles::DailyGoalRole));
             HabitDialog habitDialog{"Edit habit", HabitDialog::Mode::Edit, "Accept",
                 "Delete", habitName, habitDate, habitType, habitUnits, habitDailyGoal};
 
             decltype(auto) result = habitDialog.exec();
             if (result == QDialog::Accepted)
             {
-                QString		name = habitDialog.getName();
-                QDate		date = habitDialog.getStartDate();
+                QString     name = habitDialog.getName();
+                QDate       date = habitDialog.getStartDate();
                 Habit::Type type = habitDialog.getType();
-                QString		units = habitDialog.getUnits();
-                int			dailyGoal = habitDialog.getDailyGoal();
+                QString     units = habitDialog.getUnits();
+                int         dailyGoal = habitDialog.getDailyGoal();
                 assert((index.row() >= 0 &&
                            index.row() < static_cast<int>(mNewHabits.size())) &&
                        "Error");

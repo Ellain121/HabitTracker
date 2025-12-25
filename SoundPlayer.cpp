@@ -3,7 +3,7 @@
 #include <QDebug>
 
 std::unique_ptr<QSoundEffect> SoundPlayer::mSoundPlayer{std::make_unique<QSoundEffect>()};
-bool						  SoundPlayer::mPlayerActive{false};
+bool                          SoundPlayer::mPlayerActive{false};
 
 void SoundPlayer::initSound()
 {

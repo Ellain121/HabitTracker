@@ -8,7 +8,6 @@
 class QTableView;
 class QTimer;
 
-
 class HabitDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
@@ -23,10 +22,10 @@ public:
     void stopAnimation();
 
 private:
-    QPen		mPen;
+    QPen        mPen;
     QTableView* mTableView;
-    qreal		mPValue;
-    QTimer*		mAnimationTimer;
+    qreal       mPValue;
+    QTimer*     mAnimationTimer;
     QModelIndex mAnimatedCellIndx;
-    int			mAnimatedCellStatus;
+    int         mAnimatedCellStatus;
 };

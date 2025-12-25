@@ -13,13 +13,13 @@ class StatusProxyModel : public QIdentityProxyModel
 public:
     explicit StatusProxyModel(QObject* parent = nullptr);
 
-    QVariant	data(const QModelIndex& index, int role) const override;
-    void		setSourceModel(QAbstractItemModel* sourceModel) override;
+    QVariant    data(const QModelIndex& index, int role) const override;
+    void        setSourceModel(QAbstractItemModel* sourceModel) override;
     HabitModel* habitModel() const;
 
 private:
     QHash<QString, QPixmap*> mInfo;
-    QPixmap					 mTruePic;
-    QPixmap					 mFalsePic;
-    QPixmap					 mNullPic;
+    QPixmap                  mTruePic;
+    QPixmap                  mFalsePic;
+    QPixmap                  mNullPic;
 };

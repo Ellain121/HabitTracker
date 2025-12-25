@@ -27,11 +27,11 @@ private:
 private:
     QFormLayout* mFormLayout;
 
-    QLineEdit*		mFrequencyLineEdit;
-    QComboBox*		mPatternSizeComboBox;
-    QComboBox*		mTimeUnitComboBox;
-    int				mRepeatLayoutIndx_1;
-    int				mRepeatLayoutIndx_2;
+    QLineEdit*      mFrequencyLineEdit;
+    QComboBox*      mPatternSizeComboBox;
+    QComboBox*      mTimeUnitComboBox;
+    int             mRepeatLayoutIndx_1;
+    int             mRepeatLayoutIndx_2;
     ListViewCustom* mOptionsListView;
 
     QCheckBox* mEndsOptionCheckBox_1;

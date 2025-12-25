@@ -6,16 +6,16 @@
 
 enum class SettingVariantType
 {
-	Int = 0,
-	Boolean,
+    Int = 0,
+    Boolean,
 };
 
 struct SettingInfo
 {
-	SettingInfo(SettingVariantType type, QVariant defaultValue);
+    SettingInfo(SettingVariantType type, QVariant defaultValue);
 
-	SettingVariantType type;
-	QVariant		   defaultValue;
+    SettingVariantType type;
+    QVariant           defaultValue;
 };
 /**
  * @brief The Settings class.
@@ -28,23 +28,23 @@ struct SettingInfo
 class Settings
 {
 public:
-	static Settings& instance();
+    static Settings& instance();
 
-	void setSetting(
-		const QString& settingGroup, const QString& settingName, const QVariant& var);
-	QVariant getSetting(const QString& settingGroup, const QString& setting);
-
-private:
-	Settings();
-	Settings& operator=(const Settings& rhs) = delete;
-
-	void registerSettings();
-
-	SettingInfo getSettingInfo(const QString& settingName) const;
-	void		checkValidQVariant(
-			   SettingVariantType settingVariantType, const QVariant& var) const;
+    void setSetting(
+        const QString& settingGroup, const QString& settingName, const QVariant& var);
+    QVariant getSetting(const QString& settingGroup, const QString& setting);
 
 private:
-	QSettings					mQSettings;
-	QHash<QString, SettingInfo> mRegisteredSettings;
+    Settings();
+    Settings& operator=(const Settings& rhs) = delete;
+
+    void registerSettings();
+
+    SettingInfo getSettingInfo(const QString& settingName) const;
+    void        checkValidQVariant(
+               SettingVariantType settingVariantType, const QVariant& var) const;
+
+private:
+    QSettings                   mQSettings;
+    QHash<QString, SettingInfo> mRegisteredSettings;
 };
