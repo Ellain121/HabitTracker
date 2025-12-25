@@ -34,9 +34,7 @@ MainWindow::MainWindow(QWidget* parent)
 	, mSettingsDialog{new SettingsDialog{this}}
 {
 	ui->setupUi(this);
-	setWindowTitle(" ");
-
-	qDebug() << APPLICATION_NAME;
+    setWindowTitle(APPLICATION_NAME);
 
 	HabitModel*		  habitModel = new HabitModel{false, this};
 	StatusProxyModel* statusModel = new StatusProxyModel{this};
