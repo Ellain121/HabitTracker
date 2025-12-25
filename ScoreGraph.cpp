@@ -13,6 +13,9 @@
 
 namespace
 {
+
+const double DAY_IN_MSEC = 86400000;
+
 enum class Color
 {
     Pink = 0,
@@ -118,7 +121,7 @@ void ScoreGraph::setPlotterSettings()
     ui->scorePlot->getXAxis()->setAutoAxisSpacing(false);
 
     int size = mHabit->getDatesStatus().size();
-    ui->scorePlot->getXAxis()->setUserTickSpacing(86400000 * std::max(1, size / 20));
+    ui->scorePlot->getXAxis()->setUserTickSpacing(DAY_IN_MSEC * std::max(1, size / 20));
     ui->scorePlot->getYAxis()->setTickLabelFontSize(13);
     ui->scorePlot->getYAxis()->setTickUnitName("%");
 
