@@ -30,19 +30,19 @@ enum class Color
 using TimePeriod = RelativeResultGraph::TimePeriod;
 // doubtful
 QMap<TimePeriod, QString> TPtoQString{
-    {TimePeriod::Day, "day"},		  //
-    {TimePeriod::Week, "week"},		  //
-    {TimePeriod::Month, "month"},	  //
-    {TimePeriod::Year, "year"},		  //
-    {TimePeriod::N_Days, "n_days"}	  //
+    {TimePeriod::Day, "day"},         //
+    {TimePeriod::Week, "week"},       //
+    {TimePeriod::Month, "month"},     //
+    {TimePeriod::Year, "year"},       //
+    {TimePeriod::N_Days, "n_days"}    //
 };
 // doubtful
 QMap<QString, TimePeriod> QStringtoTP{
-    {"day", TimePeriod::Day},		  //
-    {"week", TimePeriod::Week},		  //
-    {"month", TimePeriod::Month},	  //
-    {"year", TimePeriod::Year},		  //
-    {"n_days", TimePeriod::N_Days}	  //
+    {"day", TimePeriod::Day},         //
+    {"week", TimePeriod::Week},       //
+    {"month", TimePeriod::Month},     //
+    {"year", TimePeriod::Year},       //
+    {"n_days", TimePeriod::N_Days}    //
 };
 
 QString toQString(TimePeriod timePeriod)
@@ -126,12 +126,11 @@ QDate getFirstDateOfPeriod(const QDate& date, TimePeriod timePeriod)
     int timePeriodNumber = getDayNumberInTimePeriod(date, timePeriod);
     return date.addDays(1 - timePeriodNumber);
 }
-}	 // namespace
+}    // namespace
 
 void setTheme(JKQTPlotter& plot, Color color)
 {
-    QString	  configPath{color == Color::Pink ? ":/dark_pink.ini"
-                                              : ":/dark_green.ini"};
+    QString   configPath{color == Color::Pink ? ":/dark_pink.ini" : ":/dark_green.ini"};
     QSettings settings{configPath, QSettings::IniFormat};
     plot.loadCurrentPlotterStyle(settings);
 
@@ -163,10 +162,10 @@ void RelativeResultGraph::init(const Habit* habit)
     setTheme(*ui->relativeResultPlot, Color::Green);
     initGraphInfoWidgets();
 
-    bool	 success = addGraph();
-    QWidget* widgetToShow = success ? ui->relativeResultPlot : ui->noDataWidget;
     setPlotterSettings();
     setPlotterZoom();
+    bool     success = addGraph();
+    QWidget* widgetToShow = success ? ui->relativeResultPlot : ui->noDataWidget;
     ui->relativeResultPlot->show();
 }
 
@@ -183,12 +182,12 @@ RelativeResultGraph::LocalSettings RelativeResultGraph::getLocalSettings()
     return LocalSettings{tp, nDays};
 }
 
-[[nodiscard("If false, no graph will be added")]] //
+[[nodiscard("If false, no graph will be added")]]    //
 bool RelativeResultGraph::addGraph()
 {
     const QMap<QDate, int>& habitData = mHabit->getDatesStatus();
-    TimePeriod				timePeriod = mSettings.timePeriod;
-    int						nDaysPeriodSize = mSettings.nDays;
+    TimePeriod              timePeriod = mSettings.timePeriod;
+    int                     nDaysPeriodSize = mSettings.nDays;
 
     JKQTPDatastore* ds = ui->relativeResultPlot->getDatastore();
 
@@ -199,8 +198,8 @@ bool RelativeResultGraph::addGraph()
     {
         double prevPeriodResult = 0.0;
         double curPeriodResult = 0.0;
-        int	   i = 0;
-        int	   iterCnt = 0;
+        int    i = 0;
+        int    iterCnt = 0;
         QDate  date{habitData.begin().key()};
         //		int	   curMonthNumber = date.month();
         int curPeriodNumber = getTimePeriodNumber(date, timePeriod);
@@ -210,7 +209,7 @@ bool RelativeResultGraph::addGraph()
             //			int	   nextDayWeekNumber =
             //date.addDays(1).weekNumber(); 			int	   nextDayMonthNumber =
             //date.addDays(1).month();
-            int	   nextDayPeriodNumber = getTimePeriodNumber(date.addDays(1), timePeriod);
+            int    nextDayPeriodNumber = getTimePeriodNumber(date.addDays(1), timePeriod);
             double dayResult = static_cast<double>(it.value());
             curPeriodResult += dayResult;
             //			periodSize += 1;
@@ -256,12 +255,12 @@ bool RelativeResultGraph::addGraph()
     }
     else
     {
-        int		  startPart = habitData.size() % nDaysPeriodSize;
-        bool	  firstTime = true;
-        double	  prevPeriodResult = 0.0;
-        double	  curPeriodResult = 0.0;
-        int		  i = 0;
-        int		  iterCnt = 0;
+        int       startPart = habitData.size() % nDaysPeriodSize;
+        bool      firstTime = true;
+        double    prevPeriodResult = 0.0;
+        double    curPeriodResult = 0.0;
+        int       i = 0;
+        int       iterCnt = 0;
         QDateTime date{habitData.begin().key(), QTime{}};
         for (auto it = habitData.begin(); it != habitData.end(); ++it, ++iterCnt)
         {
@@ -365,7 +364,7 @@ bool RelativeResultGraph::addGraph()
 void RelativeResultGraph::setPlotterSettings()
 {
     TimePeriod timePeriod = mSettings.timePeriod;
-    int		   nDaysPeriodSize = mSettings.nDays;
+    int        nDaysPeriodSize = mSettings.nDays;
 
     // bad
     ui->relativeResultPlot->getXAxis()->setMinorTicks(0);
@@ -412,7 +411,7 @@ void RelativeResultGraph::setPlotterSettings()
 void RelativeResultGraph::setPlotterAbsoluteX()
 {
     TimePeriod timePeriod = mSettings.timePeriod;
-    int		   nDaysPeriodSize = mSettings.nDays;
+    int        nDaysPeriodSize = mSettings.nDays;
 
     auto*  ds = ui->relativeResultPlot->getDatastore();
     size_t columnX = ds->getColumnNum("days");
@@ -423,7 +422,7 @@ void RelativeResultGraph::setPlotterAbsoluteX()
 
     QDateTime startDate{QDateTime::fromMSecsSinceEpoch(startDateInMSec)};
     QDateTime endDate{std::prev(habitData.end()).key(), QTime{}};
-    double	  periodInMSec = getTimePeriodInMSec(timePeriod, nDaysPeriodSize);
+    double    periodInMSec = getTimePeriodInMSec(timePeriod, nDaysPeriodSize);
     //	ui->relativeResultPlot->setAbsoluteX(
     //		startDate.toMSecsSinceEpoch() - DAY_IN_MSEC - periodInMSec
     //* 1.5, 		endDate.toMSecsSinceEpoch() + periodInMSec * 1.5);
@@ -437,7 +436,7 @@ void RelativeResultGraph::setPlotterAbsoluteX()
 void RelativeResultGraph::setPlotterZoom()
 {
     TimePeriod timePeriod = mSettings.timePeriod;
-    int		   nDaysPeriodSize = mSettings.nDays;
+    int        nDaysPeriodSize = mSettings.nDays;
 
     double TPMsec = getTimePeriodInMSec(timePeriod, nDaysPeriodSize);
     //	const QMap<QDate, int>& habitData = mHabit->getDatesStatus();
@@ -483,13 +482,13 @@ void RelativeResultGraph::initXTickGroupBox()
         [this]()
         {
             ui->relativeResultPlot->clearGraphs(true);
-            QString	   timePeriodQS = ui->xTickComboBox->currentText();
+            QString    timePeriodQS = ui->xTickComboBox->currentText();
             TimePeriod timePeriod = QStringtoTP[timePeriodQS];
-            int		   nDaysPeriod =
-                   timePeriod == TimePeriod::N_Days ? ui->nDaysSpinBox->value() : -1;
+            int nDaysPeriod = timePeriod == TimePeriod::N_Days ? ui->nDaysSpinBox->value()
+                                                               : -1;
             mSettings = LocalSettings{timePeriod, nDaysPeriod};
 
-            bool	 success = addGraph();
+            bool     success = addGraph();
             QWidget* widgetToShow = success ? ui->relativeResultPlot : ui->noDataWidget;
             ui->stackedWidget->setCurrentWidget(widgetToShow);
 
