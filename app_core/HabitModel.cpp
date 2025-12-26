@@ -7,7 +7,7 @@
 
 namespace
 {
-const int COLUMN_SIZE = 1'000;
+int COLUMN_SIZE = 1'000;
 
 QDate getColumnDate(int column)
 {
@@ -23,6 +23,22 @@ HabitModel::HabitModel(QObject* parent)
     , mFirstColumnIndx{1}
 {
     mHabits = mDB.habitDao.habits();
+    QDate today = QDate::currentDate();
+    QDate habEarliestStartDate = today;
+    for (auto& habit : mHabits)
+    {
+        if (habit->getStartDate() < habEarliestStartDate)
+        {
+            habEarliestStartDate = habit->getStartDate();
+        }
+    }
+    COLUMN_SIZE =
+        today.toJulianDay() - habEarliestStartDate.toJulianDay() + 2 +
+        2;    // additional 1 for the column 0 header. And additional 2 just to see that earliest dates are all empty
+    qDebug() << "early date: " << habEarliestStartDate.toString();
+    assert((COLUMN_SIZE > 0) &&
+           "INVALID COLUMN SIZE: POSSIBLE REASON - ONE OF THE HABIT'S START DATE IS IN "
+           "FUTURE");
 }
 
 QModelIndex HabitModel::addHabit(const Habit& habit)
@@ -131,6 +147,10 @@ QVariant HabitModel::headerData(int section, Qt::Orientation orientation, int ro
     if (section == 0)
     {
         return getColumnDate(mFirstColumnIndx).toString("MMMM");
+    }
+    if (section == -1)
+    {
+        return QString{"No data"};
     }
 
     QDate date = getColumnDate(section);

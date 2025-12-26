@@ -26,7 +26,8 @@ void FilterProxyModel::scrollView(int offset)
     mFirstClmnIndx -= offset;    // inversion -1 --> 1     1 --> -1
     mFirstClmnIndx =
         (std::abs(mFirstClmnIndx) + mFirstClmnIndx) >> 1;    // fancy way of std::min(0,v)
-    mFirstClmnIndx = std::min(realColumnNumber, mFirstClmnIndx);
+    mFirstClmnIndx =
+        std::min(realColumnNumber - mTABLE_COLUMN_NUMBER + 1, mFirstClmnIndx);
 
     emit invalidateFilter();
     emit newFirstColumnIndx(mFirstClmnIndx);
