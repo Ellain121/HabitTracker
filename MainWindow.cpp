@@ -1,6 +1,7 @@
 #include "MainWindow.hpp"
 
 #include "Constants.hpp"
+#include "FilterProxyModel.hpp"
 #include "HabTableView.hpp"
 #include "HabitDelegate.hpp"
 #include "HabitDialog.hpp"
@@ -38,7 +39,9 @@ MainWindow::MainWindow(QWidget* parent)
 
     HabitModel*       habitModel = new HabitModel{false, this};
     StatusProxyModel* statusModel = new StatusProxyModel{this};
+    FilterProxyModel* filterProxyModel = new FilterProxyModel{this};
     statusModel->setSourceModel(habitModel);
+    filterProxyModel->setSourceModel(statusModel);
 
     QVBoxLayout*  mainLayout = new QVBoxLayout{this};
     HabTableView* tableView = new HabTableView{this};
@@ -47,7 +50,7 @@ MainWindow::MainWindow(QWidget* parent)
     QPushButton*  syncButton = new QPushButton{"Synchronize (local)", this};
     QPushButton*  syncButtonRemote = new QPushButton{"Synchronize (remote)", this};
 
-    tableView->setModel(statusModel);
+    tableView->setModel(filterProxyModel);
     tableView->setHabitDelegate(new HabitDelegate{tableView});
     tableView->setSelectionMode(QAbstractItemView::NoSelection);
     tableView->setFocusPolicy(Qt::NoFocus);
@@ -55,6 +58,11 @@ MainWindow::MainWindow(QWidget* parent)
     tableView->setShowGrid(false);
     tableView->verticalHeader()->setVisible(false);
     tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    connect(tableView, &HabTableView::wheelScrolled, filterProxyModel,
+        &FilterProxyModel::scrollView);
+    connect(filterProxyModel, &FilterProxyModel::newFirstColumnIndx, habitModel,
+        &HabitModel::viewFirstIndxChanged);
 
     connect(addHabitButton, &QPushButton::clicked, this,
         [habitModel]()
@@ -146,11 +154,11 @@ MainWindow::MainWindow(QWidget* parent)
 
     connect(mSettingsDialog, &SettingsDialog::SIGNAL_visibilityChanged, this,
 		[this](bool visible) {	  //
-			this->centralWidget()->setEnabled(!visible);
+        this->centralWidget()->setEnabled(!visible);
 		});
     connect(mSettingsDialog, &SettingsDialog::SIGNAL_optionChanged, this,
 		[this, habitModel]() {	  //
-			habitModel->updateCachedData();
+        habitModel->updateCachedData();
 		});
 
     mainLayout->addWidget(tableView);

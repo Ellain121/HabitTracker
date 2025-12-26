@@ -139,3 +139,9 @@ void HabTableView::mouseDoubleClickEvent(QMouseEvent* event)
         }
     }
 }
+
+void HabTableView::wheelEvent(QWheelEvent* event)
+{
+    int  ry = event->angleDelta().ry();
+    emit wheelScrolled((ry > 0) - (ry < 0));
+}

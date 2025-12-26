@@ -45,6 +45,9 @@ public:
 
     void updateCachedData();
 
+public slots:
+    void viewFirstIndxChanged(int indx);
+
 private:
     bool isIndexValid(const QModelIndex& index) const;
 
@@ -52,4 +55,5 @@ private:
     DatabaseManager&        mDB;
     std::vector<Habit::Ptr> mHabits;
     bool                    mIgnoreDBFlag;
+    int                     mFirstColumnIndx;
 };

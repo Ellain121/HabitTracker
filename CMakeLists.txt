@@ -101,6 +101,7 @@ set(PROJECT_SOURCES
     SettingsDialog.ui
     ScoreGraphSettingsDialog.hpp ScoreGraphSettingsDialog.cpp ScoreGraphSettingsDialog.ui
     JKQTPlotterCustom.hpp JKQTPlotterCustom.cpp
+    FilterProxyModel.hpp FilterProxyModel.cpp
 )
 
 if(6 GREATER_EQUAL 6)

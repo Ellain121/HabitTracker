@@ -7,7 +7,7 @@
 
 namespace
 {
-const int COLUMN_SIZE = 7;
+const int COLUMN_SIZE = 1'000;
 
 QDate getColumnDate(int column)
 {
@@ -21,6 +21,7 @@ HabitModel::HabitModel(bool ignoreDB, QObject* parent)
     , mDB{DatabaseManager::instance()}
     , mHabits{}
     , mIgnoreDBFlag{ignoreDB}
+    , mFirstColumnIndx{1}
 {
     if (!mIgnoreDBFlag)
     {
@@ -129,9 +130,14 @@ QVariant HabitModel::data(const QModelIndex& index, int role) const
 
 QVariant HabitModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role != Qt::DisplayRole || orientation != Qt::Horizontal || section == 0)
+    if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
     {
         return QVariant{};
+    }
+
+    if (section == 0)
+    {
+        return getColumnDate(mFirstColumnIndx).toString("MMMM");
     }
 
     QDate date = getColumnDate(section);
@@ -252,6 +258,12 @@ void HabitModel::updateCachedData()
 {
     mHabits.clear();
     mHabits = mDB.habitDao.habits();
+}
+
+void HabitModel::viewFirstIndxChanged(int indx)
+{
+    mFirstColumnIndx = indx;
+    headerDataChanged(Qt::Orientation::Horizontal, 0, 0);
 }
 
 bool HabitModel::isIndexValid(const QModelIndex& index) const
