@@ -6,7 +6,6 @@
 #include "HabitDelegate.hpp"
 #include "HabitDialog.hpp"
 #include "HabitModel.hpp"
-#include "ImportDialog.hpp"
 #include "RegexInputDialog.hpp"
 #include "StatusProxyModel.hpp"
 #include "Utility.hpp"
@@ -37,7 +36,7 @@ MainWindow::MainWindow(QWidget* parent)
     ui->setupUi(this);
     setWindowTitle(APPLICATION_NAME);
 
-    HabitModel*       habitModel = new HabitModel{false, this};
+    HabitModel*       habitModel = new HabitModel{this};
     StatusProxyModel* statusModel = new StatusProxyModel{this};
     FilterProxyModel* filterProxyModel = new FilterProxyModel{this};
     statusModel->setSourceModel(habitModel);
@@ -46,7 +45,6 @@ MainWindow::MainWindow(QWidget* parent)
     QVBoxLayout*  mainLayout = new QVBoxLayout{this};
     HabTableView* tableView = new HabTableView{this};
     QPushButton*  addHabitButton = new QPushButton{"Add habit", this};
-    QPushButton*  importButton = new QPushButton{"Import habits from .db file", this};
     QPushButton*  syncButton = new QPushButton{"Synchronize (local)", this};
     QPushButton*  syncButtonRemote = new QPushButton{"Synchronize (remote)", this};
 
@@ -80,28 +78,6 @@ MainWindow::MainWindow(QWidget* parent)
 
                 habitModel->addHabit(
                     Habit{name, date, type, units, dailyGoal, repeatInfo});
-            }
-        });
-
-    connect(importButton, &QPushButton::clicked, this,
-        [this, habitModel]()
-        {
-            QString filename = QFileDialog::getOpenFileName(this,
-                tr("Select import .db File"), "/home/jonathan/", tr("Databases (*.db)"));
-
-            if (filename.isEmpty())
-            {
-                return;
-            }
-            //
-            ImportDialog impDialog{filename, "Approve"};
-            if (impDialog.exec() == QDialog::Accepted)
-            {
-                const std::vector<Habit>& habits = impDialog.getNewHabits();
-                for (auto& habit : habits)
-                {
-                    habitModel->addHabit(habit);
-                }
             }
         });
 
@@ -163,7 +139,6 @@ MainWindow::MainWindow(QWidget* parent)
 
     mainLayout->addWidget(tableView);
     mainLayout->addWidget(addHabitButton);
-    mainLayout->addWidget(importButton);
     mainLayout->addWidget(syncButton);
     mainLayout->addWidget(syncButtonRemote);
     centralWidget()->setLayout(mainLayout);

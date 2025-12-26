@@ -59,7 +59,7 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets Gui Multimedia)
 
 
 set(PROJECT_SOURCES
-    ImportDialog.hpp
+
     RegexInputDialog.cpp
     ListViewCustom.cpp
     RegexInputDialog.hpp
@@ -80,7 +80,7 @@ set(PROJECT_SOURCES
     HabTableView.cpp
     HabTableView.hpp
     ReccurenceDialog.cpp
-    ImportDialog.cpp
+
     ReccurenceDialog.hpp
     ScoreGraph.hpp
     ScoreGraph.cpp

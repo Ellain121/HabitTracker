@@ -16,17 +16,13 @@ QDate getColumnDate(int column)
 
 }    // namespace
 
-HabitModel::HabitModel(bool ignoreDB, QObject* parent)
+HabitModel::HabitModel(QObject* parent)
     : QAbstractTableModel{parent}
     , mDB{DatabaseManager::instance()}
     , mHabits{}
-    , mIgnoreDBFlag{ignoreDB}
     , mFirstColumnIndx{1}
 {
-    if (!mIgnoreDBFlag)
-    {
-        mHabits = mDB.habitDao.habits();
-    }
+    mHabits = mDB.habitDao.habits();
 }
 
 QModelIndex HabitModel::addHabit(const Habit& habit)
@@ -36,10 +32,7 @@ QModelIndex HabitModel::addHabit(const Habit& habit)
     beginInsertRows(QModelIndex{}, rowIndex, rowIndex);
 
     Habit::Ptr newHabit{std::make_unique<Habit>(habit)};
-    if (!mIgnoreDBFlag)
-    {
-        mDB.habitDao.addHabit(*newHabit);
-    }
+    mDB.habitDao.addHabit(*newHabit);
     mHabits.push_back(std::move(newHabit));
 
     endInsertRows();
@@ -166,55 +159,37 @@ bool HabitModel::setData(const QModelIndex& index, const QVariant& value, int ro
             {
                 habit.setDateStatus(date, toInt(value));
             }
-            if (!mIgnoreDBFlag)
-            {
-                mDB.habitDao.updateHabitDateStatus(date, habit);
-            }
+            mDB.habitDao.updateHabitDateStatus(date, habit);
             break;
         }
         case Roles::NameRole:
         {
             habit.setName(toQString(value));
-            if (!mIgnoreDBFlag)
-            {
-                mDB.habitDao.updateHabitBasicInfo(habit);
-            }
+            mDB.habitDao.updateHabitBasicInfo(habit);
             break;
         }
         case Roles::StartDateRole:
         {
             habit.setStartDate(toQDate(value));
-            if (!mIgnoreDBFlag)
-            {
-                mDB.habitDao.updateHabitBasicInfo(habit);
-            }
+            mDB.habitDao.updateHabitBasicInfo(habit);
             break;
         }
         case Roles::TypeRole:
         {
             habit.setType(static_cast<Habit::Type>(toInt(value)));
-            if (!mIgnoreDBFlag)
-            {
-                mDB.habitDao.updateHabitBasicInfo(habit);
-            }
+            mDB.habitDao.updateHabitBasicInfo(habit);
             break;
         }
         case Roles::UnitsRole:
         {
             habit.setUnits(toQString(value));
-            if (!mIgnoreDBFlag)
-            {
-                mDB.habitDao.updateHabitBasicInfo(habit);
-            }
+            mDB.habitDao.updateHabitBasicInfo(habit);
             break;
         }
         case Roles::DailyGoalRole:
         {
             habit.setDailyGoal(toInt(value));
-            if (!mIgnoreDBFlag)
-            {
-                mDB.habitDao.updateHabitBasicInfo(habit);
-            }
+            mDB.habitDao.updateHabitBasicInfo(habit);
             break;
         }
         default:

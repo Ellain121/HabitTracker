@@ -27,7 +27,7 @@ public:
     };
 
 public:
-    explicit HabitModel(bool ignoreDB = false, QObject* parent = nullptr);
+    explicit HabitModel(QObject* parent = nullptr);
 
     QModelIndex addHabit(const Habit& habit);
 
@@ -54,6 +54,5 @@ private:
 private:
     DatabaseManager&        mDB;
     std::vector<Habit::Ptr> mHabits;
-    bool                    mIgnoreDBFlag;
     int                     mFirstColumnIndx;
 };
