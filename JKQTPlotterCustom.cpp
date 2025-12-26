@@ -11,11 +11,8 @@ void JKQTPlotterCustom::wheelEvent(QWheelEvent* event)
 {
     double xMin = getXMin();
     double xMax = getXMax();
-    mYMin = getYMin();
-    mYMax = getYMax();
     double viewWidth = xMax - xMin;
 
-    //	double zoomStep = (xMax - xMin) / 10;
     double sign = (-1.0) * event->angleDelta().y() / 120;
     double day = 86400000;
     double mult = 2.0;
@@ -38,13 +35,10 @@ void JKQTPlotterCustom::wheelEvent(QWheelEvent* event)
 
     if (mTimer == nullptr)
     {
-        // setXY(mZoomXMin, mZoomXMax, mYMin, mYMax);
         mTimer = new QTimer(this);
-        connect(mTimer, &QTimer::timeout, this,
-            [this]() { setXY(mZoomXMin, mZoomXMax, mYMin, mYMax); });
-        mTimer->start(40);
+        connect(mTimer, &QTimer::timeout, this, [this]() { setX(mZoomXMin, mZoomXMax); });
+        mTimer->start(15);
     }
-    // setX(z)
     qDebug() << "wheelEvent: " << event->angleDelta()
              << " absX: " << QDateTime::fromMSecsSinceEpoch(absMinX)
              << " mZoomXMin: " << QDateTime::fromMSecsSinceEpoch(mZoomXMin);
